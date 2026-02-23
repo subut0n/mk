@@ -1,0 +1,27 @@
+# Binary
+mk
+!mk/
+
+# Build output
+dist/
+
+# AI assistants
+.claude/
+CLAUDE.md
+.cursorrules
+.cursor/
+.copilot/
+.github/copilot-instructions.md
+.aider*
+
+# Screenshot sources
+assets/src/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp

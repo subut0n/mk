@@ -7,6 +7,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/subut0n/mk/actions/workflows/ci.yml"><img src="https://github.com/subut0n/mk/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/subut0n/mk/releases/latest"><img src="https://img.shields.io/github/v/release/subut0n/mk" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/subut0n/mk" alt="License"></a>
+  <img src="https://img.shields.io/github/go-mod/go-version/subut0n/mk" alt="Go version">
+</p>
+
+<p align="center">
   <a href="#installation">Installation</a> &middot;
   <a href="#usage">Usage</a> &middot;
   <a href="#features">Features</a> &middot;
@@ -25,11 +32,17 @@ Running `make` requires you to remember target names, open the Makefile to check
 
 ## Installation
 
+### Quick install (recommended)
+
 ```bash
-git clone https://github.com/subut0n/mk.git && cd mk && go build -o mk . && sudo mv mk /usr/local/bin/
+curl -fsSL https://raw.githubusercontent.com/subut0n/mk/main/install.sh | sh
 ```
 
-That's it. Requires **Go 1.26+**.
+Pin a specific version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/subut0n/mk/main/install.sh | sh -s -- --version v1.0.0
+```
 
 <details>
 <summary>Other install methods</summary>
@@ -42,7 +55,22 @@ go install github.com/subut0n/mk@latest
 
 ### Pre-built binaries
 
-Download the latest release for your platform from the [Releases](https://github.com/subut0n/mk/releases) page.
+Download the latest release for your platform from the [Releases](https://github.com/subut0n/mk/releases) page, then:
+
+```bash
+chmod +x mk-*
+sudo mv mk-* /usr/local/bin/mk
+```
+
+### From source
+
+Requires **Go 1.26+**.
+
+```bash
+git clone https://github.com/subut0n/mk.git && cd mk
+make build
+sudo mv mk /usr/local/bin/
+```
 
 </details>
 
@@ -168,24 +196,10 @@ Targets starting with `.` (e.g., `.PHONY`) are automatically excluded. Variable 
 Requires **Go 1.26+**.
 
 ```bash
-go build -o mk .          # Build
-go test ./...              # Run tests
-go vet ./...               # Static analysis
-```
-
-### Cross-compilation
-
-```bash
-GOOS=linux   GOARCH=amd64 go build -o dist/mk-linux .
-GOOS=darwin  GOARCH=amd64 go build -o dist/mk-mac .
-GOOS=darwin  GOARCH=arm64 go build -o dist/mk-mac-arm64 .
-GOOS=windows GOARCH=amd64 go build -o dist/mk.exe .
-```
-
-### Version injection
-
-```bash
-go build -ldflags "-X main.Version=1.0.0" -o mk .
+make build                 # Build with version injection
+make test                  # Run tests with race detector
+make dist                  # Cross-compile for all platforms
+make coverage              # Run tests with coverage report
 ```
 
 ## Project Structure
@@ -193,6 +207,7 @@ go build -ldflags "-X main.Version=1.0.0" -o mk .
 ```
 mk/
 ├── main.go                    # Entry point and CLI orchestration
+├── install.sh                 # Cross-platform installer
 ├── internal/
 │   ├── ansi/                  # ANSI escape code constants
 │   ├── config/                # Persistent configuration (~/.config/mk/)
@@ -205,4 +220,4 @@ mk/
 
 ## License
 
-MIT
+[MIT](LICENSE)
